@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
 @AllArgsConstructor
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
-
     private final UserRepository userRepository;
 
     @Override

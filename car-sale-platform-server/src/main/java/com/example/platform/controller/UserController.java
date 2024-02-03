@@ -14,13 +14,11 @@ import java.util.List;
 @RequestMapping("/api/users")
 @AllArgsConstructor
 public class UserController {
-
     private final UserService userService;
 
     @GetMapping("/")
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<UserDTO> getAll() {
-
         return userService.findAll();
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RoleMapper implements Mapper <RoleDTO, Role>{
-
     @Override
     public RoleDTO toDto(Role role) {
 

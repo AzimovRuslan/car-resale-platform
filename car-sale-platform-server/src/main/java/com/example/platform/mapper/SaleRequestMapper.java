@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SaleRequestMapper implements Mapper<SaleRequestDTO, SaleRequest>{
-
     @Override
     public SaleRequestDTO toDto(SaleRequest saleRequest) {
 

@@ -13,7 +13,6 @@ import java.io.IOException;
 
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthEntryPointJwt.class);
 
     @Override

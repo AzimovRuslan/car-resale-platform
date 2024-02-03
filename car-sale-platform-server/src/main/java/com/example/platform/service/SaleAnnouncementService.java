@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @org.springframework.stereotype.Service
 @AllArgsConstructor
 public class SaleAnnouncementService implements Service<SaleAnnouncementDTO> {
-
     private final SaleAnnouncementRepository saleAnnouncementRepository;
     private final SaleAnnouncementMapper saleAnnouncementMapper;
     private final SaleRequestService saleRequestService;
@@ -34,13 +33,8 @@ public class SaleAnnouncementService implements Service<SaleAnnouncementDTO> {
         return saleAnnouncementMapper.toDto(RecordGetter.getRecordFromTable(id, saleAnnouncementRepository));
     }
 
-    //
-    //Разобраться почему некоректно работает подтверждение объявления
-    //
-    //
     @Override
     public SaleAnnouncementDTO create(SaleAnnouncementDTO saleAnnouncementDTO) {
-
         final SaleAnnouncement saleAnnouncement = saleAnnouncementMapper.toEntity(saleAnnouncementDTO);
 
         SaleRequest confirmationSaleRequest = saleAnnouncement.getSaleRequest();
@@ -63,7 +57,6 @@ public class SaleAnnouncementService implements Service<SaleAnnouncementDTO> {
 
     @Override
     public SaleAnnouncementDTO deleteById(Long id) {
-
         SaleAnnouncement saleAnnouncement = RecordGetter.getRecordFromTable(id, saleAnnouncementRepository);
 
         if (saleAnnouncement != null) {
@@ -75,7 +68,6 @@ public class SaleAnnouncementService implements Service<SaleAnnouncementDTO> {
 
     @Override
     public SaleAnnouncementDTO update(Long id, SaleAnnouncementDTO saleAnnouncementDTO) {
-
         SaleAnnouncement saleAnnouncement = RecordGetter.getRecordFromTable(id, saleAnnouncementRepository);
         SaleAnnouncement saleAnnouncementDetails = saleAnnouncementMapper.toEntity(saleAnnouncementDTO);
 

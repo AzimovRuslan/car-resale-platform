@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Builder
 @Data
 public class Role {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

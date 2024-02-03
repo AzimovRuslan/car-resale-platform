@@ -1,7 +1,6 @@
 package com.example.platform.aspect;
 
 public class Constant {
-
     public static final String RECORD_NOT_FOUND = "Record not found -> id=";
 
     public static final String RECEIVED_ALL = "Received all -> ";

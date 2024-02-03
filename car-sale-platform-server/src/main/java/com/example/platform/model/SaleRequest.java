@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 @Data
 @Builder
 public class SaleRequest {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

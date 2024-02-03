@@ -10,7 +10,6 @@ import java.time.LocalTime;
 @Getter
 @Setter
 public class SaleAnnouncementDTO {
-
     private Long id;
     private SaleRequest saleRequest;
     private LocalDate date = LocalDate.now();

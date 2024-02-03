@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class AuthService {
-
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -35,7 +34,6 @@ public class AuthService {
     private final JwtUtils jwtUtils;
 
     public ResponseEntity<?> signIn(LoginRequest loginRequest) {
-
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -54,7 +52,6 @@ public class AuthService {
     }
 
     public ResponseEntity<MessageResponse> signUp(SignupRequest signupRequest) {
-
         if (userRepository.existsByUsername(signupRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()

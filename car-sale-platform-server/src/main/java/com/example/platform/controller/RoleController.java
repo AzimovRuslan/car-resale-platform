@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/roles")
 @AllArgsConstructor
 public class RoleController {
-
     private final RoleService roleService;
 
 //    @PreAuthorize("hasAuthority('USER')")
     @PostMapping
     public RoleDTO create(@RequestBody RoleDTO roleDTO) {
-
         return roleService.create(roleDTO);
     }
 }

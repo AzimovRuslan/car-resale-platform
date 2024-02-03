@@ -12,13 +12,11 @@ import java.util.List;
 @RequestMapping("/api/cars")
 @AllArgsConstructor
 public class CarController {
-
     private final CarService carService;
 
     @GetMapping("/")
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<CarDTO> getAll() {
-
         return carService.findAll();
     }
 
@@ -26,28 +24,24 @@ public class CarController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('USER')")
     public CarDTO get(@PathVariable("id") Long id) {
-
         return carService.findById(id);
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('USER')")
     public CarDTO create(@RequestBody CarDTO carDTO) {
-
         return carService.create(carDTO);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('USER')")
     public CarDTO update(@PathVariable("id") Long id, @RequestBody CarDTO carDTO) {
-
         return carService.update(id, carDTO);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('USER')")
     public void delete(@PathVariable("id") Long id) {
-
         carService.deleteById(id);
     }
 }

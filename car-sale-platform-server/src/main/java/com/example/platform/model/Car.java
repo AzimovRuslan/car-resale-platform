@@ -17,7 +17,6 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Car {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

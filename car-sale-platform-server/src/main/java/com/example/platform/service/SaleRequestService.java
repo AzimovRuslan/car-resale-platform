@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @org.springframework.stereotype.Service
 @AllArgsConstructor
 public class SaleRequestService implements Service<SaleRequestDTO> {
-
     private final SaleRequestRepository saleRequestRepository;
     private final SaleRequestMapper saleRequestMapper;
     private final SaleAnnouncementRepository saleAnnouncementRepository;
@@ -32,7 +31,6 @@ public class SaleRequestService implements Service<SaleRequestDTO> {
 
     @Override
     public SaleRequestDTO create(SaleRequestDTO saleRequestDTO) {
-
         final SaleRequest saleRequest = saleRequestMapper.toEntity(saleRequestDTO);
         saleRequestRepository.save(saleRequest);
 
@@ -41,7 +39,6 @@ public class SaleRequestService implements Service<SaleRequestDTO> {
 
     @Override
     public SaleRequestDTO deleteById(Long id) {
-
         SaleRequest saleRequest = RecordGetter.getRecordFromTable(id, saleRequestRepository);
 
         SaleAnnouncement saleAnnouncement = saleAnnouncementRepository.findAll()
@@ -51,11 +48,9 @@ public class SaleRequestService implements Service<SaleRequestDTO> {
                 .orElse(null);
 
         if (saleRequest != null) {
-
             if (saleAnnouncement != null) {
                 saleAnnouncementRepository.deleteById(saleAnnouncement.getId());
             }
-
             saleRequestRepository.deleteById(id);
         }
 
@@ -64,7 +59,6 @@ public class SaleRequestService implements Service<SaleRequestDTO> {
 
     @Override
     public SaleRequestDTO update(Long id, SaleRequestDTO saleRequestDTO) {
-
         SaleRequest saleRequest = RecordGetter.getRecordFromTable(id, saleRequestRepository);
         SaleRequest saleRequestDetails = saleRequestMapper.toEntity(saleRequestDTO);
 

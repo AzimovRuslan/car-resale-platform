@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @org.springframework.stereotype.Service
 @AllArgsConstructor
 public class UserService implements Service<UserDTO> {
-
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
@@ -29,7 +28,6 @@ public class UserService implements Service<UserDTO> {
 
     @Override
     public UserDTO create(UserDTO userDTO) {
-
         final User user = userMapper.toEntity(userDTO);
         userRepository.save(user);
 
@@ -38,7 +36,6 @@ public class UserService implements Service<UserDTO> {
 
     @Override
     public UserDTO deleteById(Long id) {
-
         User user = RecordGetter.getRecordFromTable(id, userRepository);
 
         if (user != null) {
@@ -50,7 +47,6 @@ public class UserService implements Service<UserDTO> {
 
     @Override
     public UserDTO update(Long id, UserDTO userDTO) {
-
         User user = RecordGetter.getRecordFromTable(id, userRepository);
         User userDetails = userMapper.toEntity(userDTO);
 

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CarMapper implements Mapper<CarDTO, Car> {
-
     @Override
     public CarDTO toDto(Car car) {
 

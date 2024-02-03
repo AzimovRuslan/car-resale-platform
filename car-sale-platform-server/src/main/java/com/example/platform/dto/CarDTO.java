@@ -8,7 +8,6 @@ import java.util.Objects;
 @Getter
 @Setter
 public class CarDTO {
-
     private Long id;
     private String brand;
     private String model;

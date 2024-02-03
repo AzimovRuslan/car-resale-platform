@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
-
     private static final long serialVersionUID = 1L;
     private final Long id;
     private final String username;

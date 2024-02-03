@@ -11,7 +11,6 @@ import java.util.Objects;
 @Getter
 @Setter
 public class SaleRequestDTO {
-
     private Long id;
     private User user;
     private Car car;
