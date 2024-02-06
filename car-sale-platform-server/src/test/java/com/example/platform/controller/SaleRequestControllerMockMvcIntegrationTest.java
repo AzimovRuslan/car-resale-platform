@@ -27,7 +27,6 @@ import java.util.Optional;
 @AutoConfigureMockMvc
 @NoArgsConstructor
 class SaleRequestControllerMockMvcIntegrationTest extends AbstractMvcTest {
-
     @Autowired
     private CarService carService;
 
@@ -77,7 +76,6 @@ class SaleRequestControllerMockMvcIntegrationTest extends AbstractMvcTest {
 
     @Test
     void givenSaleRequest_whenAdd_thenStatus201andSaleRequestReturned() throws Exception {
-
         final String token = extractToken(login("Admin", "admin").andReturn());
 
         mockMvc.perform(
@@ -100,7 +98,6 @@ class SaleRequestControllerMockMvcIntegrationTest extends AbstractMvcTest {
 
     @Test
     void givenId_whenGetExistingSaleRequest_thenStatus200andSaleRequestReturned() throws Exception {
-
         final String token = extractToken(login("Admin", "admin").andReturn());
         long id = createTestSaleRequest(user, "This is almost good car", BigDecimal.valueOf(1000)).getId();
 
@@ -121,7 +118,6 @@ class SaleRequestControllerMockMvcIntegrationTest extends AbstractMvcTest {
 
     @Test
     void giveSaleRequest_whenUpdate_thenStatus200andUpdatedReturns() throws Exception {
-
         final String token = extractToken(login("Admin", "admin").andReturn());
         long id = createTestSaleRequest(user, "This is bad car", BigDecimal.valueOf(1000)).getId();
 
@@ -145,7 +141,6 @@ class SaleRequestControllerMockMvcIntegrationTest extends AbstractMvcTest {
 
     @Test
     void givenSaleRequest_whenDeleteSaleRequest_thenStatus200() throws Exception {
-
         final String token = extractToken(login("Admin", "admin").andReturn());
         SaleRequest testSaleRequest = saleRequestMapper.toEntity(createTestSaleRequest(user, "This is bad car", BigDecimal.valueOf(1000)));
 
@@ -157,7 +152,6 @@ class SaleRequestControllerMockMvcIntegrationTest extends AbstractMvcTest {
     }
 
     private SaleRequestDTO createTestSaleRequest(User user, String description, BigDecimal price) {
-
         SaleRequest saleRequest = new SaleRequest();
         saleRequest.setCar(carMapper.toEntity(getCarDtoFromTable()));
         saleRequest.setUser(user);
@@ -168,7 +162,6 @@ class SaleRequestControllerMockMvcIntegrationTest extends AbstractMvcTest {
     }
 
     private CarDTO getCarDtoFromTable() {
-
         CarDTO carDTO = carService.findAll()
                 .stream()
                 .filter(c -> c.getBrand().equals(car.getBrand()))

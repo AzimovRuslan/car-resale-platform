@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class AbstractMvcTest {
-
     @Autowired
     protected ObjectMapper objectMapper;
 
@@ -26,12 +25,10 @@ public class AbstractMvcTest {
     }
 
     protected String extractToken(MvcResult result) throws UnsupportedEncodingException {
-
         return JsonPath.read(result.getResponse().getContentAsString(), "$.token");
     }
 
     protected ResultActions login(String username, String password) throws Exception {
-
         final LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername(username);
         loginRequest.setPassword(password);

@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc
 @NoArgsConstructor
 class CarControllerMockMvcIntegrationTest extends AbstractMvcTest {
-
     @Autowired
     private CarService carService;
 
