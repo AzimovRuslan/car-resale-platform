@@ -5,8 +5,10 @@ import com.example.platform.aspect.exception.NoSuchRecordException;
 import com.example.platform.aspect.utility.RecordGetter;
 import com.example.platform.dto.RoleDTO;
 import com.example.platform.mapper.RoleMapper;
+import com.example.platform.model.Car;
 import com.example.platform.model.ERole;
 import com.example.platform.model.Role;
+import com.example.platform.model.User;
 import com.example.platform.repository.RoleRepository;
 import lombok.AllArgsConstructor;
 
@@ -39,12 +41,25 @@ public class RoleService implements Service<Role, RoleDTO> {
 
     @Override
     public Role deleteById(Long id) {
-        return null;
+        Role role = RecordGetter.getRecordFromTable(id, roleRepository);
+
+        if (role != null) {
+            roleRepository.deleteById(id);
+        }
+
+        return role;
     }
 
     @Override
     public Role update(Long id, RoleDTO roleDTO) {
-        return null;
+        Role role = RecordGetter.getRecordFromTable(id, roleRepository);
+        Role roleDetails = roleMapper.toEntity(roleDTO);
+
+        role.setName(roleDetails.getName());
+
+        roleRepository.save(role);
+
+        return role;
     }
 
     public Role findByName(ERole name) {
