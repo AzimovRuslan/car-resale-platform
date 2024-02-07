@@ -1,7 +1,6 @@
 package com.example.platform.controller;
 
 import com.example.platform.AbstractMvcTest;
-import com.example.platform.dto.CarDTO;
 import com.example.platform.mapper.CarMapper;
 import com.example.platform.model.Car;
 import com.example.platform.repository.CarRepository;
@@ -102,7 +101,7 @@ class CarControllerMockMvcIntegrationTest extends AbstractMvcTest {
     void givenCar_whenDeleteCar_thenStatus200() throws Exception {
 
         final String token = extractToken(login("Admin", "admin").andReturn());
-        Car testCar = carMapper.toEntity(createTestCar("Audi", "A6", "C8", 2018));
+        Car testCar = createTestCar("Audi", "A6", "C8", 2018);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/api/cars/{id}", testCar.getId())
@@ -125,7 +124,7 @@ class CarControllerMockMvcIntegrationTest extends AbstractMvcTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-    private CarDTO createTestCar(String brand, String model, String generation, int year) {
+    private Car createTestCar(String brand, String model, String generation, int year) {
 
         Car testCar = new Car();
         testCar.setBrand(brand);

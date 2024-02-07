@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -18,25 +17,25 @@ public class SaleAnnouncementController {
 
     @GetMapping("/")
     @PreAuthorize("hasAuthority('USER')")
-    public List<SaleAnnouncementDTO> getAll() {
+    public List<SaleAnnouncement> getAll() {
         return saleAnnouncementService.findAll();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('USER')")
-    public SaleAnnouncementDTO get(@PathVariable("id") Long id) {
+    public SaleAnnouncement get(@PathVariable("id") Long id) {
         return saleAnnouncementService.findById(id);
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('USER')")
-    public SaleAnnouncementDTO create(@RequestBody SaleAnnouncementDTO saleAnnouncementDTO) {
+    public SaleAnnouncement create(@RequestBody SaleAnnouncementDTO saleAnnouncementDTO) {
         return saleAnnouncementService.create(saleAnnouncementDTO);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public SaleAnnouncementDTO update(@PathVariable("id") Long id, @RequestBody SaleAnnouncementDTO saleAnnouncementDTO) {
+    public SaleAnnouncement update(@PathVariable("id") Long id, @RequestBody SaleAnnouncementDTO saleAnnouncementDTO) {
         return saleAnnouncementService.update(id, saleAnnouncementDTO);
     }
 

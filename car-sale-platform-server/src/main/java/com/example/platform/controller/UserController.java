@@ -1,6 +1,6 @@
 package com.example.platform.controller;
 
-import com.example.platform.dto.UserDTO;
+import com.example.platform.model.User;
 import com.example.platform.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +18,7 @@ public class UserController {
 
     @GetMapping("/")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<UserDTO> getAll() {
+    public List<User> getAll() {
         return userService.findAll();
     }
 }

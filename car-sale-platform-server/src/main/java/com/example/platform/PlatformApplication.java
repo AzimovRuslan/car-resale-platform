@@ -37,8 +37,8 @@ public class PlatformApplication {
              adminSR.setUsername("admin");
              adminSR.setPassword("admin");
              adminSR.setEmail("admin@gmail.com");
-             adminRoles.add(roleMapper.toEntity(roleService.findByName(userRoleDTO.getName())).getName().toString());
-             adminRoles.add(roleMapper.toEntity(roleService.findByName(adminRoleDTO.getName())).getName().toString());
+             adminRoles.add(roleService.findByName(userRoleDTO.getName()).getName().toString());
+             adminRoles.add(roleService.findByName(adminRoleDTO.getName()).getName().toString());
              adminSR.setRoles(adminRoles);
              authService.signUp(adminSR);
          };

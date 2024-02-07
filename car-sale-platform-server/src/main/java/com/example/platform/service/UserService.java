@@ -8,45 +8,44 @@ import com.example.platform.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 @AllArgsConstructor
-public class UserService implements Service<UserDTO> {
+public class UserService implements Service<User, UserDTO> {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
     @Override
-    public List<UserDTO> findAll() {
-        return userRepository.findAll().stream().map(userMapper::toDto).collect(Collectors.toList());
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override
-    public UserDTO findById(Long id) {
-        return userMapper.toDto(RecordGetter.getRecordFromTable(id, userRepository));
+    public User findById(Long id) {
+        return RecordGetter.getRecordFromTable(id, userRepository);
     }
 
     @Override
-    public UserDTO create(UserDTO userDTO) {
+    public User create(UserDTO userDTO) {
         final User user = userMapper.toEntity(userDTO);
         userRepository.save(user);
 
-        return userMapper.toDto(user);
+        return user;
     }
 
     @Override
-    public UserDTO deleteById(Long id) {
+    public User deleteById(Long id) {
         User user = RecordGetter.getRecordFromTable(id, userRepository);
 
         if (user != null) {
             userRepository.deleteById(id);
         }
 
-        return userMapper.toDto(user);
+        return user;
     }
 
     @Override
-    public UserDTO update(Long id, UserDTO userDTO) {
+    public User update(Long id, UserDTO userDTO) {
         User user = RecordGetter.getRecordFromTable(id, userRepository);
         User userDetails = userMapper.toEntity(userDTO);
 
@@ -57,6 +56,6 @@ public class UserService implements Service<UserDTO> {
 
         userRepository.save(user);
 
-        return userMapper.toDto(user);
+        return user;
     }
 }

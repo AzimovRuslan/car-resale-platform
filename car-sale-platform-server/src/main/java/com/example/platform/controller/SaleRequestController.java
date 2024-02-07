@@ -1,6 +1,7 @@
 package com.example.platform.controller;
 
 import com.example.platform.dto.SaleRequestDTO;
+import com.example.platform.model.SaleRequest;
 import com.example.platform.service.SaleRequestService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,25 +17,25 @@ public class SaleRequestController {
 
     @GetMapping("/")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<SaleRequestDTO> getAll() {
+    public List<SaleRequest> getAll() {
         return saleRequestService.findAll();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public SaleRequestDTO get(@PathVariable("id") Long id) {
+    public SaleRequest get(@PathVariable("id") Long id) {
         return saleRequestService.findById(id);
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('USER')")
-    public SaleRequestDTO create(@RequestBody SaleRequestDTO saleRequestDTO) {
+    public SaleRequest create(@RequestBody SaleRequestDTO saleRequestDTO) {
         return saleRequestService.create(saleRequestDTO);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('USER')")
-    public SaleRequestDTO update(@PathVariable("id") Long id, @RequestBody SaleRequestDTO saleRequestDTO) {
+    public SaleRequest update(@PathVariable("id") Long id, @RequestBody SaleRequestDTO saleRequestDTO) {
         return saleRequestService.update(id, saleRequestDTO);
     }
 

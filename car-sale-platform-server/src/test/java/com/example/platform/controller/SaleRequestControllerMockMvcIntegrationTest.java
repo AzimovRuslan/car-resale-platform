@@ -1,8 +1,6 @@
 package com.example.platform.controller;
 
 import com.example.platform.AbstractMvcTest;
-import com.example.platform.dto.CarDTO;
-import com.example.platform.dto.SaleRequestDTO;
 import com.example.platform.mapper.CarMapper;
 import com.example.platform.mapper.SaleRequestMapper;
 import com.example.platform.model.*;
@@ -69,7 +67,7 @@ class SaleRequestControllerMockMvcIntegrationTest extends AbstractMvcTest {
 
         saleRequest = new SaleRequest();
         saleRequest.setUser(user);
-        saleRequest.setCar(carMapper.toEntity(getCarDtoFromTable()));
+        saleRequest.setCar(getCarFromTable());
         saleRequest.setDescription("This is really good car");
         saleRequest.setPrice(BigDecimal.valueOf(10000));
     }
@@ -142,7 +140,7 @@ class SaleRequestControllerMockMvcIntegrationTest extends AbstractMvcTest {
     @Test
     void givenSaleRequest_whenDeleteSaleRequest_thenStatus200() throws Exception {
         final String token = extractToken(login("Admin", "admin").andReturn());
-        SaleRequest testSaleRequest = saleRequestMapper.toEntity(createTestSaleRequest(user, "This is bad car", BigDecimal.valueOf(1000)));
+        SaleRequest testSaleRequest = createTestSaleRequest(user, "This is bad car", BigDecimal.valueOf(1000));
 
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/api/sale-requests/{id}", testSaleRequest.getId())
@@ -151,9 +149,9 @@ class SaleRequestControllerMockMvcIntegrationTest extends AbstractMvcTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-    private SaleRequestDTO createTestSaleRequest(User user, String description, BigDecimal price) {
+    private SaleRequest createTestSaleRequest(User user, String description, BigDecimal price) {
         SaleRequest saleRequest = new SaleRequest();
-        saleRequest.setCar(carMapper.toEntity(getCarDtoFromTable()));
+        saleRequest.setCar(getCarFromTable());
         saleRequest.setUser(user);
         saleRequest.setDescription(description);
         saleRequest.setPrice(price);
@@ -161,13 +159,12 @@ class SaleRequestControllerMockMvcIntegrationTest extends AbstractMvcTest {
         return saleRequestService.create(saleRequestMapper.toDto(saleRequest));
     }
 
-    private CarDTO getCarDtoFromTable() {
-        CarDTO carDTO = carService.findAll()
+    private Car getCarFromTable() {
+
+        return carService.findAll()
                 .stream()
                 .filter(c -> c.getBrand().equals(car.getBrand()))
                 .findFirst()
                 .orElse(null);
-
-        return carDTO;
     }
 }

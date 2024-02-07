@@ -15,40 +15,40 @@ import java.util.Optional;
 
 @org.springframework.stereotype.Service
 @AllArgsConstructor
-public class RoleService implements Service<RoleDTO> {
+public class RoleService implements Service<Role, RoleDTO> {
     private final RoleRepository roleRepository;
     private final RoleMapper roleMapper;
 
     @Override
-    public List<RoleDTO> findAll() {
+    public List<Role> findAll() {
         return null;
     }
 
     @Override
-    public RoleDTO findById(Long id) {
-        return roleMapper.toDto(RecordGetter.getRecordFromTable(id, roleRepository));
+    public Role findById(Long id) {
+        return RecordGetter.getRecordFromTable(id, roleRepository);
     }
 
     @Override
-    public RoleDTO create(RoleDTO roleDTO) {
+    public Role create(RoleDTO roleDTO) {
         final Role role = roleMapper.toEntity(roleDTO);
         roleRepository.save(role);
 
-        return roleMapper.toDto(role);
+        return role;
     }
 
     @Override
-    public RoleDTO deleteById(Long id) {
+    public Role deleteById(Long id) {
         return null;
     }
 
     @Override
-    public RoleDTO update(Long id, RoleDTO roleDTO) {
+    public Role update(Long id, RoleDTO roleDTO) {
         return null;
     }
 
-    public RoleDTO findByName(ERole name) {
+    public Role findByName(ERole name) {
         Optional<Role> role = roleRepository.findByName(name);
-        return roleMapper.toDto(role.orElseThrow(() -> new NoSuchRecordException(Constant.RECORD_NOT_FOUND + name)));
+        return role.orElseThrow(() -> new NoSuchRecordException(Constant.RECORD_NOT_FOUND + name));
     }
 }

@@ -5,59 +5,59 @@ import com.example.platform.dto.CarDTO;
 import com.example.platform.dto.SaleRequestDTO;
 import com.example.platform.mapper.CarMapper;
 import com.example.platform.model.Car;
+import com.example.platform.model.SaleRequest;
 import com.example.platform.repository.CarRepository;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 @AllArgsConstructor
-public class CarService implements Service<CarDTO> {
+public class CarService implements Service<Car, CarDTO> {
     private final CarRepository carRepository;
     private final CarMapper carMapper;
     private final SaleRequestService saleRequestService;
 
     @Override
-    public List<CarDTO> findAll() {
-        return carRepository.findAll().stream().map(carMapper::toDto).collect(Collectors.toList());
+    public List<Car> findAll() {
+        return carRepository.findAll();
     }
 
     @Override
-    public CarDTO findById(Long id) {
-        return carMapper.toDto(RecordGetter.getRecordFromTable(id, carRepository));
+    public Car findById(Long id) {
+        return RecordGetter.getRecordFromTable(id, carRepository);
     }
 
     @Override
-    public CarDTO create(CarDTO carDTO) {
+    public Car create(CarDTO carDTO) {
         final Car car = carMapper.toEntity(carDTO);
         carRepository.save(car);
 
-        return carMapper.toDto(car);
+        return car;
     }
 
     @Override
-    public CarDTO deleteById(Long id) {
+    public Car deleteById(Long id) {
         Car car = RecordGetter.getRecordFromTable(id, carRepository);
 
-        SaleRequestDTO saleRequestDTO = saleRequestService.findAll()
+        SaleRequest saleRequest = saleRequestService.findAll()
                 .stream()
                 .filter(s -> s.getCar().equals(car))
                 .findFirst()
                 .orElse(null);
 
         if (car != null) {
-            if (saleRequestDTO != null) {
-                saleRequestService.deleteById(saleRequestDTO.getId());
+            if (saleRequest != null) {
+                saleRequestService.deleteById(car.getId());
             }
             carRepository.deleteById(id);
         }
 
-        return carMapper.toDto(car);
+        return car;
     }
 
     @Override
-    public CarDTO update(Long id, CarDTO carDTO) {
+    public Car update(Long id, CarDTO carDTO) {
         Car car = RecordGetter.getRecordFromTable(id, carRepository);
         Car carDetails = carMapper.toEntity(carDTO);
 
@@ -68,6 +68,6 @@ public class CarService implements Service<CarDTO> {
 
         carRepository.save(car);
 
-        return carMapper.toDto(car);
+        return car;
     }
 }

@@ -10,35 +10,34 @@ import com.example.platform.repository.SaleRequestRepository;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 @AllArgsConstructor
-public class SaleRequestService implements Service<SaleRequestDTO> {
+public class SaleRequestService implements Service<SaleRequest, SaleRequestDTO> {
     private final SaleRequestRepository saleRequestRepository;
     private final SaleRequestMapper saleRequestMapper;
     private final SaleAnnouncementRepository saleAnnouncementRepository;
 
     @Override
-    public List<SaleRequestDTO> findAll() {
-        return saleRequestRepository.findAll().stream().map(saleRequestMapper::toDto).collect(Collectors.toList());
+    public List<SaleRequest> findAll() {
+        return saleRequestRepository.findAll();
     }
 
     @Override
-    public SaleRequestDTO findById(Long id) {
-        return saleRequestMapper.toDto(RecordGetter.getRecordFromTable(id, saleRequestRepository));
+    public SaleRequest findById(Long id) {
+        return RecordGetter.getRecordFromTable(id, saleRequestRepository);
     }
 
     @Override
-    public SaleRequestDTO create(SaleRequestDTO saleRequestDTO) {
+    public SaleRequest create(SaleRequestDTO saleRequestDTO) {
         final SaleRequest saleRequest = saleRequestMapper.toEntity(saleRequestDTO);
         saleRequestRepository.save(saleRequest);
 
-        return saleRequestMapper.toDto(saleRequest);
+        return saleRequest;
     }
 
     @Override
-    public SaleRequestDTO deleteById(Long id) {
+    public SaleRequest deleteById(Long id) {
         SaleRequest saleRequest = RecordGetter.getRecordFromTable(id, saleRequestRepository);
 
         SaleAnnouncement saleAnnouncement = saleAnnouncementRepository.findAll()
@@ -54,11 +53,11 @@ public class SaleRequestService implements Service<SaleRequestDTO> {
             saleRequestRepository.deleteById(id);
         }
 
-        return saleRequestMapper.toDto(saleRequest);
+        return saleRequest;
     }
 
     @Override
-    public SaleRequestDTO update(Long id, SaleRequestDTO saleRequestDTO) {
+    public SaleRequest update(Long id, SaleRequestDTO saleRequestDTO) {
         SaleRequest saleRequest = RecordGetter.getRecordFromTable(id, saleRequestRepository);
         SaleRequest saleRequestDetails = saleRequestMapper.toEntity(saleRequestDTO);
 
@@ -70,6 +69,6 @@ public class SaleRequestService implements Service<SaleRequestDTO> {
 
         saleRequestRepository.save(saleRequest);
 
-        return saleRequestMapper.toDto(saleRequest);
+        return saleRequest;
     }
 }
