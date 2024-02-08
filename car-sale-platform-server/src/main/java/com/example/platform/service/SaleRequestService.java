@@ -24,6 +24,10 @@ public class SaleRequestService implements Service<SaleRequest, SaleRequestDTO> 
         return saleRequestRepository.findAll(pq).getContent();
     }
 
+    public List<SaleRequest> findAllByStatus() {
+        return saleRequestRepository.findAllByStatus("not confirmed");
+    }
+
     @Override
     public SaleRequest findById(Long id) {
         return RecordGetter.getRecordFromTable(id, saleRequestRepository);

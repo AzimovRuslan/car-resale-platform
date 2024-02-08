@@ -25,6 +25,12 @@ public class SaleRequestController {
         return saleRequestService.findAll(PageRequest.of(page, size));
     }
 
+    @GetMapping("/status")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<SaleRequest> getAllByStatus() {
+        return saleRequestService.findAllByStatus();
+    }
+
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public SaleRequest get(@PathVariable("id") Long id) {
