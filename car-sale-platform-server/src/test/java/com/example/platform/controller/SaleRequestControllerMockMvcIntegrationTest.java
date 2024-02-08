@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -161,7 +162,7 @@ class SaleRequestControllerMockMvcIntegrationTest extends AbstractMvcTest {
 
     private Car getCarFromTable() {
 
-        return carService.findAll()
+        return carRepository.findAll()
                 .stream()
                 .filter(c -> c.getBrand().equals(car.getBrand()))
                 .findFirst()

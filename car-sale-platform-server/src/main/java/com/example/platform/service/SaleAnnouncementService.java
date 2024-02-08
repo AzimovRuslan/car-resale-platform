@@ -8,6 +8,9 @@ import com.example.platform.model.SaleAnnouncement;
 import com.example.platform.model.SaleRequest;
 import com.example.platform.repository.SaleAnnouncementRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -19,8 +22,8 @@ public class SaleAnnouncementService implements Service<SaleAnnouncement, SaleAn
     private final SaleRequestMapper saleRequestMapper;
 
     @Override
-    public List<SaleAnnouncement> findAll() {
-        return saleAnnouncementRepository.findAll();
+    public List<SaleAnnouncement> findAll(PageRequest pq) {
+        return saleAnnouncementRepository.findAll(pq).getContent();
     }
 
     @Override
@@ -35,7 +38,7 @@ public class SaleAnnouncementService implements Service<SaleAnnouncement, SaleAn
         SaleRequest confirmationSaleRequest = saleAnnouncement.getSaleRequest();
         confirmationSaleRequest.setStatus("confirmed");
 
-        Long confirmationSaleRequestId = saleAnnouncement.getId();
+        Long confirmationSaleRequestId = confirmationSaleRequest.getId();
 
         saleRequestService.update(confirmationSaleRequestId, saleRequestMapper.toDto(confirmationSaleRequest));
         saleAnnouncement.setSaleRequest(saleRequestService.findById(confirmationSaleRequestId));

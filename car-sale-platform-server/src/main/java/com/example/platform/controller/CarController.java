@@ -4,6 +4,7 @@ import com.example.platform.dto.CarDTO;
 import com.example.platform.model.Car;
 import com.example.platform.service.CarService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +18,12 @@ public class CarController {
 
     @GetMapping("/")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Car> getAll() {
-        return carService.findAll();
+    public List<Car> getAll(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "2") int size
+    ) {
+        return carService.findAll(PageRequest.of(page, size));
     }
-
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('USER')")

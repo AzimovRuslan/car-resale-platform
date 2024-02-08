@@ -11,5 +11,6 @@ public class SaleRequestDTO {
     private User user;
     private Car car;
     private String description;
-    private BigDecimal price = BigDecimal.valueOf(0.00);
+    private BigDecimal price;
+    private String status;
 }

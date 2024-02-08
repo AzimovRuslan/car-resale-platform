@@ -2,12 +2,14 @@ package com.example.platform.service;
 
 import com.example.platform.aspect.utility.RecordGetter;
 import com.example.platform.dto.CarDTO;
-import com.example.platform.dto.SaleRequestDTO;
 import com.example.platform.mapper.CarMapper;
 import com.example.platform.model.Car;
 import com.example.platform.model.SaleRequest;
 import com.example.platform.repository.CarRepository;
+import com.example.platform.repository.SaleRequestRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -17,10 +19,11 @@ public class CarService implements Service<Car, CarDTO> {
     private final CarRepository carRepository;
     private final CarMapper carMapper;
     private final SaleRequestService saleRequestService;
+    private final SaleRequestRepository saleRequestRepository;
 
     @Override
-    public List<Car> findAll() {
-        return carRepository.findAll();
+    public List<Car> findAll(PageRequest pq) {
+        return carRepository.findAll(pq).getContent();
     }
 
     @Override
@@ -40,7 +43,7 @@ public class CarService implements Service<Car, CarDTO> {
     public Car deleteById(Long id) {
         Car car = RecordGetter.getRecordFromTable(id, carRepository);
 
-        SaleRequest saleRequest = saleRequestService.findAll()
+        SaleRequest saleRequest = saleRequestRepository.findAll()
                 .stream()
                 .filter(s -> s.getCar().equals(car))
                 .findFirst()
@@ -48,7 +51,7 @@ public class CarService implements Service<Car, CarDTO> {
 
         if (car != null) {
             if (saleRequest != null) {
-                saleRequestService.deleteById(car.getId());
+                saleRequestService.deleteById(saleRequest.getId());
             }
             carRepository.deleteById(id);
         }

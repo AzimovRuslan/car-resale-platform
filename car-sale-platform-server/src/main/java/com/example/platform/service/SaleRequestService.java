@@ -8,6 +8,7 @@ import com.example.platform.model.SaleRequest;
 import com.example.platform.repository.SaleAnnouncementRepository;
 import com.example.platform.repository.SaleRequestRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -19,8 +20,8 @@ public class SaleRequestService implements Service<SaleRequest, SaleRequestDTO> 
     private final SaleAnnouncementRepository saleAnnouncementRepository;
 
     @Override
-    public List<SaleRequest> findAll() {
-        return saleRequestRepository.findAll();
+    public List<SaleRequest> findAll(PageRequest pq) {
+        return saleRequestRepository.findAll(pq).getContent();
     }
 
     @Override

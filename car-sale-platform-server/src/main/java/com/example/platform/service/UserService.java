@@ -6,6 +6,7 @@ import com.example.platform.mapper.UserMapper;
 import com.example.platform.model.User;
 import com.example.platform.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class UserService implements Service<User, UserDTO> {
     private final UserMapper userMapper;
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<User> findAll(PageRequest pq) {
+        return userRepository.findAll(pq).getContent();
     }
 
     @Override

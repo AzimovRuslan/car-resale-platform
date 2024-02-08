@@ -5,12 +5,12 @@ import com.example.platform.aspect.exception.NoSuchRecordException;
 import com.example.platform.aspect.utility.RecordGetter;
 import com.example.platform.dto.RoleDTO;
 import com.example.platform.mapper.RoleMapper;
-import com.example.platform.model.Car;
 import com.example.platform.model.ERole;
 import com.example.platform.model.Role;
-import com.example.platform.model.User;
 import com.example.platform.repository.RoleRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +22,8 @@ public class RoleService implements Service<Role, RoleDTO> {
     private final RoleMapper roleMapper;
 
     @Override
-    public List<Role> findAll() {
-        return null;
+    public List<Role> findAll(PageRequest pq) {
+        return roleRepository.findAll(pq).getContent();
     }
 
     @Override

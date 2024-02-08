@@ -4,6 +4,7 @@ import com.example.platform.dto.SaleAnnouncementDTO;
 import com.example.platform.model.SaleAnnouncement;
 import com.example.platform.service.SaleAnnouncementService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,11 @@ public class SaleAnnouncementController {
 
     @GetMapping("/")
     @PreAuthorize("hasAuthority('USER')")
-    public List<SaleAnnouncement> getAll() {
-        return saleAnnouncementService.findAll();
+    public List<SaleAnnouncement> getAll(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "2") int size
+    ) {
+        return saleAnnouncementService.findAll(PageRequest.of(page, size));
     }
 
     @GetMapping("/{id}")
