@@ -43,7 +43,6 @@ class CarControllerMockMvcIntegrationTest extends AbstractMvcTest {
 
     @Test
     void givenCar_whenAdd_thenStatus201andCarReturned() throws Exception {
-
         final String token = extractToken(login("Admin", "admin").andReturn());
 
         mockMvc.perform(
