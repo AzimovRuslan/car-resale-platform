@@ -160,7 +160,6 @@ class SaleRequestControllerMockMvcIntegrationTest extends AbstractMvcTest {
     }
 
     private Car getCarFromTable() {
-
         return carRepository.findAll()
                 .stream()
                 .filter(c -> c.getBrand().equals(car.getBrand()))

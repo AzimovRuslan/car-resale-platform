@@ -7,6 +7,7 @@ import com.example.platform.mapper.SaleRequestMapper;
 import com.example.platform.model.SaleAnnouncement;
 import com.example.platform.model.SaleRequest;
 import com.example.platform.repository.SaleAnnouncementRepository;
+import com.example.platform.repository.SaleRequestRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +21,8 @@ public class SaleAnnouncementService implements Service<SaleAnnouncement, SaleAn
     private final SaleAnnouncementMapper saleAnnouncementMapper;
     private final SaleRequestService saleRequestService;
     private final SaleRequestMapper saleRequestMapper;
+    private final SaleRequestRepository saleRequestRepository;
+    private final CarService carService;
 
     @Override
     public List<SaleAnnouncement> findAll(PageRequest pq) {

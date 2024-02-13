@@ -2,6 +2,7 @@ package com.example.platform.controller;
 
 import com.example.platform.AbstractMvcTest;
 import com.example.platform.mapper.CarMapper;
+import com.example.platform.mapper.SaleAnnouncementMapper;
 import com.example.platform.mapper.SaleRequestMapper;
 import com.example.platform.model.Car;
 import com.example.platform.model.SaleAnnouncement;
@@ -25,7 +26,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Optional;
 
 @SpringBootTest
@@ -58,6 +58,9 @@ public class SaleAnnouncementControllerMockMvcIntegrationTest extends AbstractMv
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private SaleAnnouncementMapper saleAnnouncementMapper;
 
     private Car car;
     private SaleRequest saleRequest;
@@ -114,5 +117,52 @@ public class SaleAnnouncementControllerMockMvcIntegrationTest extends AbstractMv
                 .andExpect(MockMvcResultMatchers.jsonPath("$.saleRequest.car.model").value("X5"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.saleRequest.car.generation").value("E39"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.saleRequest.car.year").value(2003));
+    }
+
+    @Test
+    void givenId_whenGetExistingSaleAnnouncement_thenStatus200andSaleAnnouncementReturned() throws Exception {
+        final String token = extractToken(login("Admin", "admin").andReturn());
+        long id = createTestSaleAnnouncement().getId();
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/sale-announcements/{id}", id)
+                        .header("Authorization", "Bearer " + token)
+        )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.date").value(saleAnnouncement.getDate().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.saleRequest.description").value("This is really good car"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.saleRequest.price").value(10000))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.saleRequest.car.brand").value("BMW"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.saleRequest.car.model").value("X5"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.saleRequest.car.generation").value("E39"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.saleRequest.car.year").value(2003));
+    }
+
+    @Test
+    void givenSaleAnnouncement_whenDeleteSaleAnnouncement_thenStatus200() throws Exception {
+        final String token = extractToken(login("Admin", "admin").andReturn());
+        SaleAnnouncement testSaleAnnouncement = createTestSaleAnnouncement();
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/api/sale-announcements/{id}", testSaleAnnouncement.getId())
+                        .header("Authorization", "Bearer " + token)
+        )
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    private SaleAnnouncement createTestSaleAnnouncement() {
+        SaleAnnouncement saleAnnouncement = new SaleAnnouncement();
+        saleAnnouncement.setSaleRequest(getSaleRequestFromTable());
+
+        return saleAnnouncementService.create(saleAnnouncementMapper.toDto(saleAnnouncement));
+    }
+
+    private SaleRequest getSaleRequestFromTable() {
+        return saleRequestRepository.findAll()
+                .stream()
+                .filter(c -> c.getDescription().equals(saleRequest.getDescription()))
+                .findFirst()
+                .orElse(null);
     }
 }
